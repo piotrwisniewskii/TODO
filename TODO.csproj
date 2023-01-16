@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TODO.Data\TODO.Data.csproj" />
+    <ProjectReference Include="..\TODO.Services\TODO.Services.csproj" />
+  </ItemGroup>
+
 </Project>
