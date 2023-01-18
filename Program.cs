@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using TODO.Data.DataBase;
+using TODO.Services.NotesServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<TODODbContext>(
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<INotesService, NotesService>();
 
 var app = builder.Build();
 
