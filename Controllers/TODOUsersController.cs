@@ -14,7 +14,7 @@ namespace TODO.Controllers
         public IActionResult Index()
         {
             var data = _context.TODOUsers.ToList();
-            return View();
+            return View(data);
         }
     }
 }
