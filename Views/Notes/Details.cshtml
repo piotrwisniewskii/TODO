@@ -1,0 +1,47 @@
+﻿@model Note
+
+@{
+    ViewData["Title"] = "Note";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Details for @Model.NoteName</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <div class="form-group">
+                    <label asp-for="NoteName" class="control-label"></label>
+                    <input asp-for="NoteName" class="form-control" readonly/>
+                    <span asp-validation-for="NoteName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NoteMessage" class="control-label"></label>
+                    <input asp-for="NoteMessage" class="form-control" readonly />
+                    <span asp-validation-for="NoteMessage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NoteDate" class="control-label"></label>
+                    <input asp-for="NoteDate" class="form-control" readonly/>
+                    <span asp-validation-for="NoteDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Priority" class="control-label"></label>
+                    <input asp-for="Priority" class="form-control" readonly/>
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsDone" class="control-label"></label>
+                    <input asp-for="IsDone" class="form-control" readonly/>
+                    <span asp-validation-for="IsDone" class="text-danger"></span>
+                </div>
+            </div>
+                <div>
+                     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                     <a asp-action="Index">Back to List</a>
+                </div>
+        </div>
+    </div>
+</div>
+
