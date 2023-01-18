@@ -1,7 +1,7 @@
 ﻿@model Note
 
 @{
-    ViewData["Title"] = "Note";
+    ViewData["Title"] = "Delete Note";
 }
 
 <div class="row text">
@@ -36,13 +36,14 @@
                     <input asp-for="IsDone" class="form-control" readonly/>
                     <span asp-validation-for="IsDone" class="text-danger"></span>
                 </div>
-                <div>
-                            <a class="btn btn-outline-warning float-right" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-                            <a class="btn btn-outline-primary float-right" asp-action="Index">
-                                Back to List
-                            </a>
-                </div>
             </div>
+                <div>
+                    <form asp-action="Delete"> 
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Confirm" class="btn btn-danger float-end" />
+                    </form>                    
+                     <a asp-action="Index">Back to List</a>
+                </div>
         </div>
     </div>
 </div>
