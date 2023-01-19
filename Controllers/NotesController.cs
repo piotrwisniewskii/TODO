@@ -1,16 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TODO.Data.DataBase;
 using TODO.Data.Models;
 using TODO.Services.NotesServices;
+using TODO.Services.TODOUsersServices;
 
 namespace TODO.Controllers
 {
     public class NotesController : Controller
     {
        private readonly INotesService _service;
-       public NotesController(INotesService service)
+        private readonly ITODOUsersService _userService;
+        private readonly IMapper _mapper;
+       public NotesController(INotesService service, ITODOUsersService userService, IMapper mapper)
         {
             _service = service;
+            _userService = userService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -53,12 +60,14 @@ namespace TODO.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id,[Bind("Id,NoteName", "NoteMessage", "NoteDate", "Priority","IsDone")] Note note)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return View(note);
+
+            if (id == note.Id)
             {
-                return View(note);
+                await _service.UpdateAsync(id, note);
+                return RedirectToAction(nameof(Index));
             }
-            await _service.UpdateAsync(id,note);
-            return RedirectToAction(nameof(Index));
+            return View(note);
         }
 
         public async Task<IActionResult> Delete(int id)
