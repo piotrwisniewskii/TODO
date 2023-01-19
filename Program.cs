@@ -12,8 +12,8 @@ builder.Services.AddDbContext<TODODbContext>(
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<INotesService, NotesService>();
-builder.Services.AddTransient<ITODOUsersService, TODOUsersService>();
+builder.Services.AddScoped<INotesService, NotesService>();
+builder.Services.AddScoped<ITODOUsersService, TODOUsersService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();

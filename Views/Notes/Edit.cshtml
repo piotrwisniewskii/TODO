@@ -1,5 +1,6 @@
 ﻿@using TODO.Data.Enums
-@model Note
+@using TODO.Data.Models.ViewModels
+@model NoteVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -41,15 +42,15 @@
                     </select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
-            @*     <div class="form-group">
+            <div class="form-group">
                 <label asp-for="TODOUserId" class="control-label"></label>
-                @Html.DropDownListFor(m => m.TODOUserId, new SelectList(Model.OwnersDictionary,"Key","Value"),
+                @Html.DropDownListFor(m => m.TODOUserId, new SelectList(Model.TODOUsersDictionary,"Key","Value"),
                 "-Please select owner-",
                 new {
                     @class = "form-control"
                 })
                 <span asp-validation-for="TODOUserId" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Update" formmethod="post" class="btn btn-outline-success float-end" />
                 <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
