@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using System;
 using TODO.Data.DataBase;
 using TODO.Services.NotesServices;
 using TODO.Services.TODOUsersServices;
@@ -15,6 +14,7 @@ builder.Services.AddDbContext<TODODbContext>(
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<INotesService, NotesService>();
 builder.Services.AddTransient<ITODOUsersService, TODOUsersService>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
