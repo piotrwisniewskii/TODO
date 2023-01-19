@@ -1,20 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TODO.Data.DataBase;
+using TODO.Services.TODOUsersServices;
 
 namespace TODO.Controllers
 {
     public class TODOUsersController : Controller
     {
-        private readonly TODODbContext _context;
+        private readonly ITODOUsersService _service;
 
-        public TODOUsersController(TODODbContext context)
+        public TODOUsersController(ITODOUsersService service)
         {
-            _context = context;
+            _service = service;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var data = _context.TODOUsers.ToList();
+            var data = await _service.GetAllAsync();
             return View(data);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var modelDetails = await _service.GetByIdAsync(id);
+            if (modelDetails == null) return View("NotFound");
+            return View(modelDetails);
         }
     }
 }

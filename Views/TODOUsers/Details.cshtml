@@ -1,0 +1,45 @@
+﻿@model TODOUser
+
+@{
+    ViewData["Title"] = "Details of";
+}
+
+<div class="row">
+
+                           <div class="col-md-4 col-xs-6 border-primary mb-3">
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-12">
+                                            <div class="card-header text-white" style="background-color:blueviolet"  >
+                                                <p class="card-text">
+                                                        <h5 class="card-title text-md-center text-white" >
+                                @Model.Name
+                                                    </h5>
+                                                </p>
+                                            </div>
+                                        </div>
+                                            <div class="col-md-12">
+                                        <img src="@Model.ProfilePictureURL" width="100%" alt="@Model.Name">
+                                            </div>
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+
+                                                        <p class="card-text"><b>Name: </b>@Model.Name</p>
+                                                        <p class="card-text"><b>Surname: </b>@Model.Surname</p>
+                                                        <p class="card-text"><b>To Do List</b>@Model.Notes</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="card-footer ">
+                                                <p class="card-text">
+                                                    <a class="btn btn-outline-primary " asp-action="Details" asp-route-id="@Model.Id"><i class="bi bi-eye"></i> Show Details</a>
+                                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i>Edit </a>
+                                                    <a class="btn btn-danger text-white float-end" asp-action="Delete" asp-route-id="@Model.Id"><i class="bi bi-trash"></i>Delete </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+
+</div>
