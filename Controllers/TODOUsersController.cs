@@ -19,6 +19,7 @@ namespace TODO.Controllers
         }
         public async Task<IActionResult> Index()
         {
+
             var usersList = await _service.GetAllAsync(n=>n.Notes);
             var model = new List<TODOUserVM>();
             foreach (var item in usersList)
@@ -44,7 +45,7 @@ namespace TODO.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name","Surname", "ProfilePictureURL")]TODOUser user)
+        public async Task<IActionResult> Create([Bind("Name","Surname", "ProfilePictureURL","Email")]TODOUser user)
         {
             if (!ModelState.IsValid) return View(user);
             await _service.AddAsync(user);

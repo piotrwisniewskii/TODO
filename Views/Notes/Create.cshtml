@@ -47,7 +47,7 @@
             </div>
                      <div class="form-group">
                 <label asp-for="TODOUserId" class="control-label"></label>
-                    @Html.DropDownListFor(m => m.TODOUserId, new SelectList(Model.TODOUsersDictionary,"Key","Value"),
+                    @Html.DropDownListFor(m => m.TODOUserId, new SelectList(ViewBag.users, nameof(TODOUserVM.Id), nameof(TODOUserVM.Name)),
                 "-Please select owner-",
                 new {
                     @class = "form-control"

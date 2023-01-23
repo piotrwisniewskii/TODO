@@ -4,7 +4,7 @@ using TODO.Services.NotesServices;
 using TODO.Services.TODOUsersServices;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var autoMapperAssemblies = new[] { typeof(Program).Assembly };
 
 
 builder.Services.AddDbContext<TODODbContext>(
@@ -14,7 +14,9 @@ builder.Services.AddDbContext<TODODbContext>(
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<INotesService, NotesService>();
 builder.Services.AddScoped<ITODOUsersService, TODOUsersService>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(autoMapperAssemblies);
+
+var TodoSamplePassword = builder.Configuration["NoteServiceMail:Password"];
 
 var app = builder.Build();
 

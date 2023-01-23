@@ -5,7 +5,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>To do</h1>
+
+@if (ViewBag.showAll){
+    <h1>All tasks</h1>
+    <a class="btn btn-outline-primary" asp-action="Index" asp-route-showAll="false"> Show Upcoming</a>
+    
+} else {
+        <h1>Upcoming tasks</h1>
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-showAll="true"> Show All</a>
+}
 
 <table class="table">
     <thead>
@@ -34,7 +42,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="@item.GetRowClass()">
                 <td>
                     @item.NoteName
                 </td>
@@ -65,5 +73,10 @@
 <div style="position: fixed; right: 25px; bottom: 25px" class="text white">
     <a asp-controller="Notes" asp-action="Create" class="btn btn-success">
     <i class="bi-bi plus circle"></i>Add New
+    </a>
+</div>
+<div style="position: fixed; left: 25px; bottom: 25px" class="text white">
+    <a asp-controller="Notes" asp-action="SendNotifications" class="btn btn-danger">
+    <i class="bi-bi plus circle"></i>Send reminder
     </a>
 </div>

@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System.ComponentModel.DataAnnotations;
-using TODO.Data.DataBase;
 using TODO.Data.Models;
 using TODO.Data.Models.ViewModels;
 using TODO.Services.NotesServices;
@@ -22,29 +19,26 @@ namespace TODO.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool showAll = false)
         {
-            var modelNoteList = await _service.GetAllAsync(n => n.TODOUser);
-            var model = new List<NoteVM>();
-            foreach (var item in modelNoteList)
-            {
-                var mappedNote = _mapper.Map<NoteVM>(item);
-                model.Add(mappedNote);
-            }
+            var modelNoteList = showAll
+                ? await _service.GetAllAsync()
+                : await _service.GetUpcomingTasks();
+
+            var model = _mapper.Map<List<NoteVM>>(modelNoteList);
+            
+            ViewBag.ShowAll = showAll;
 
             return View(model);
         }
 
         public async Task <IActionResult> Create()
-        {
-            var usersDictionary = new Dictionary<int, string>();
-            var usersList = await _userService.GetAllAsync();
-            foreach (var user in usersList)
+        {           
+            var model = new NoteVM()
             {
-                usersDictionary.Add(user.Id, user.Name);
-            }
-            var model = new NoteVM();
-            model.TODOUsersDictionary = usersDictionary;
+                NoteDate = DateTime.Today
+            };
+            ViewBag.users = await _userService.GetAllAsync();
             return View(model);
         }
 
@@ -55,7 +49,7 @@ namespace TODO.Controllers
             {
                 return View(note);
             }
-            _userService.GetAllAsync();
+            
             await _service.AddAsync(_mapper.Map<Note>(note));
             return RedirectToAction(nameof(Index));
         }
@@ -72,13 +66,8 @@ namespace TODO.Controllers
         {
             var model = _mapper.Map<NoteVM>(await _service.GetByIdAsync(id));
 
-            var usersDictionary = new Dictionary<int, string>();
-            var usersList = await _userService.GetAllAsync();
-            foreach (var user in usersList)
-            {
-                usersDictionary.Add(user.Id, user.Name);
-            }
-            model.TODOUsersDictionary = usersDictionary;
+            var usersList = await _userService.GetAllAsync();            
+            ViewBag.users = usersList;
             return View(model);
 
        
@@ -113,6 +102,13 @@ namespace TODO.Controllers
             await _service.DeleteAsync(id);
          
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SendNotifications()
+        {
+            await _service.SendUpcomingTasksNotifications();
+            return View("EmailSent"); 
         }
 
 
